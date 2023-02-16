@@ -14,6 +14,7 @@ function createDocument(title = []) {
     </head>
     <body>
       <div class="card">
+      <p>${title}</p>
     
       </div>
     </body>

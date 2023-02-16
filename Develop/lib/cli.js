@@ -6,6 +6,7 @@ const { createDocument } = require('./document');
 class CLI {
   constructor() {
     this.title = '';
+    this.Employe=[];
 
  
   }
@@ -18,6 +19,10 @@ class CLI {
           message: 'Please enter your name',
         },
       ])
+      .then(({ name }) => {
+        this.title = `${name}`;
+        return `<header class="header"><p>${this.title}</p></header>`;
+      })
   
       .then(() => {
         // sort by priority so that priority tasks come before non-priority tasks
@@ -27,10 +32,13 @@ class CLI {
           createDocument(this.title)
         );
       })
-      .then(() => console.log('Created tasks.html'))
+      .then(() => console.log('Created teamProfiles.html'))
       
-    }
+      .catch((err) => {
+        console.log(err);
+        console.log('Oops. Something went wrong.');
+      });
+   }
 }
-
 
   module.exports = CLI;
