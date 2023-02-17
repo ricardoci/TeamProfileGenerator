@@ -48,11 +48,7 @@ class CLI {
   Employee() {
     return inquirer
       .prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'What is your name?',
-        },
+       
         {
           type: 'input',
           name: 'id',
@@ -69,10 +65,10 @@ class CLI {
           message: 'Would you like to add another member?',
         },
       ])
-      .then(({ name, id, email }) => {
+      .then(({ name, id, email, confirmAddTask }) => {
         this.tasks.push({ name, id ,email});
         if (confirmAddTask) {
-          return this.addTask();
+          return this.Employee();
         }
       });
   }
