@@ -2,7 +2,7 @@ const Employee = require("./Employee");
 const inquirer = require('./cli');
 
 
-function createDocument(title, Occupancy, id) {
+function createDocument(title, Position, id) {
   
 
   return `<!DOCTYPE html>
@@ -17,7 +17,7 @@ function createDocument(title, Occupancy, id) {
     <body>
       <div class="card">
       <p>${title}</p>
-      <p>${Occupancy}</p>
+      <p>${Position}</p>
       <p>${id}</p>
       
 

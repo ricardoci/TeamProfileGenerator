@@ -19,17 +19,17 @@ class CLI {
         },
         {
           type: "checkbox",
-          name: "Occupancy",
+          name: "Position",
           message: "Please select job occupancy",
           choices: ["engineer", "manager", "intern","Employee" ,"none"],
         },
       ])
-      .then(({ name, Occupancy}) => {
-        const selectedOccupancy = Occupancy.join(", ");
+      .then(({ name, Position}) => {
+        const selectedPosition = Position.join(", ");
         this.title = `${name}`;
         
         
-        this.Occupancy = `${selectedOccupancy}`
+        this.Position = `${selectedPosition}`
         return this.Employee();
       })
    
@@ -40,7 +40,7 @@ class CLI {
         
         return writeFile(
           join(__dirname, '..', 'teamProfiles.html'),
-          createDocument(this.title, this.Occupancy, )
+          createDocument(this.title, this.Position, )
         );
       })
       .then(() => console.log('Created teamProfiles.html'))
