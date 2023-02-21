@@ -1,7 +1,9 @@
+const Employee = require("./Employee");
+const inquirer = require('./cli');
 
 
-function createDocument(title = []) {
-
+function createDocument(title, Occupancy, id) {
+  
 
   return `<!DOCTYPE html>
   <html lang="en">
@@ -15,6 +17,8 @@ function createDocument(title = []) {
     <body>
       <div class="card">
       <p>${title}</p>
+      <p>${Occupancy}</p>
+      <p>${id}</p>
       
 
     

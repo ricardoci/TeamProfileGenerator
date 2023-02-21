@@ -6,7 +6,8 @@ const Employee = require('../lib/Employee');
 class CLI {
   constructor() {
     this.title = '';
-    this.tasks = [];
+   
+    this.tasks =[];
   }
   run() {
     return inquirer
@@ -23,18 +24,23 @@ class CLI {
           choices: ["engineer", "manager", "intern","Employee" ,"none"],
         },
       ])
-      .then(({ name }) => {
+      .then(({ name, Occupancy}) => {
+        const selectedOccupancy = Occupancy.join(", ");
         this.title = `${name}`;
+        
+        
+        this.Occupancy = `${selectedOccupancy}`
         return this.Employee();
       })
+   
       
    
       .then(() => {
-        // sort by priority so that priority tasks come before non-priority tasks
+        
         
         return writeFile(
           join(__dirname, '..', 'teamProfiles.html'),
-          createDocument(this.title)
+          createDocument(this.title, this.Occupancy, )
         );
       })
       .then(() => console.log('Created teamProfiles.html'))
@@ -65,8 +71,8 @@ class CLI {
           message: 'Would you like to add another member?',
         },
       ])
-      .then(({ name, id, email, confirmAddTask }) => {
-        this.tasks.push({ name, id ,email});
+      .then(({Occupancy, name, id, email, confirmAddTask }) => {
+        this.tasks.push({ Occupancy ,name, id ,email});
         if (confirmAddTask) {
           return this.Employee();
         }

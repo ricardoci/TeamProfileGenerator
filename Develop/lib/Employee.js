@@ -1,3 +1,5 @@
+const inquirer = require('./cli');
+
 
 
 class Employee{
