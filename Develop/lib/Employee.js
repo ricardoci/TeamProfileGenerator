@@ -10,7 +10,7 @@ class Employee{
 
     }
 }
-function getName(name) {
+ function getName(name) {
     if (name) {
       return `<p>${name}</p>`;
     }

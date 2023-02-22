@@ -57,7 +57,7 @@ class CLI {
       ])
       .then(({ name, id, email, confirmAddTask }) => {
         const employee = new Employee(name, id, email, confirmAddTask);
-        this.tasks.push(employee);
+        this.tasks.push({ name, id, email }); // push an object containing name, id, and email
         if (confirmAddTask) {
           return this.Employee();
         }
@@ -74,6 +74,6 @@ class CLI {
         console.log('Oops. Something went wrong.');
       });
   }
-}
+}  
 
 module.exports = CLI;

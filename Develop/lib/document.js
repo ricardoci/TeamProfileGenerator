@@ -3,7 +3,17 @@ const inquirer = require('./cli');
 
 
 function createDocument( Position, tasks ) {
- 
+  const employeeList = tasks
+    .map((task) => {
+      return `
+        <div class="card">
+          <h3>${task.name}</h3>
+          <p>ID: ${task.id}</p>
+          <p>Email: ${task.email}</p>
+        </div>
+      `;
+    })
+    .join('');
 
   return `<!DOCTYPE html>
   <html lang="en">
@@ -18,7 +28,8 @@ function createDocument( Position, tasks ) {
       <div class="card">
      
       <p>${Position}</p>
-      <p>${tasks.getName}</p>
+      ${employeeList}
+      
       
 
     
