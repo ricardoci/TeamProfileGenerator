@@ -3,20 +3,15 @@ const { join } = require('path');
 const { writeFile } = require('fs/promises');
 const { createDocument } = require('./document');
 const Employee = require('../lib/Employee');
+
 class CLI {
   constructor() {
-    this.title = '';
-   
-    this.tasks =[];
+    this.tasks = [];
   }
+  
   run() {
     return inquirer
       .prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'Please enter your name',
-        },
         {
           type: "checkbox",
           name: "Position",
@@ -24,37 +19,26 @@ class CLI {
           choices: ["engineer", "manager", "intern","Employee" ,"none"],
         },
       ])
-      .then(({ name, Position}) => {
+      .then(({  Position, }) => {
         const selectedPosition = Position.join(", ");
-        this.title = `${name}`;
-        
-        
         this.Position = `${selectedPosition}`
         return this.Employee();
       })
-   
-      
-   
-      .then(() => {
-        
-        
-        return writeFile(
-          join(__dirname, '..', 'teamProfiles.html'),
-          createDocument(this.title, this.Position, )
-        );
-      })
-      .then(() => console.log('Created teamProfiles.html'))
-      
+     
       .catch((err) => {
         console.log(err);
         console.log('Oops. Something went wrong.');
       });
-   }
+  }
 
   Employee() {
     return inquirer
       .prompt([
-       
+        {
+          type: 'input',
+          name: 'name',
+          message: 'What is your name?',
+        },
         {
           type: 'input',
           name: 'id',
@@ -71,14 +55,25 @@ class CLI {
           message: 'Would you like to add another member?',
         },
       ])
-      .then(({Occupancy, name, id, email, confirmAddTask }) => {
-        this.tasks.push({ Occupancy ,name, id ,email});
+      .then(({ name, id, email, confirmAddTask }) => {
+        const employee = new Employee(name, id, email, confirmAddTask);
+        this.tasks.push(employee);
         if (confirmAddTask) {
           return this.Employee();
         }
+      })
+      .then(() => {
+        return writeFile(
+          join(__dirname, '..', 'teamProfiles.html'),
+          createDocument(this.Position, this.tasks)
+        );
+      })
+      .then(() => console.log('Created teamProfiles.html'))
+      .catch((err) => {
+        console.log(err);
+        console.log('Oops. Something went wrong.');
       });
   }
 }
 
-
-  module.exports = CLI;
+module.exports = CLI;

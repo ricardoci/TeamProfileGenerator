@@ -1,5 +1,5 @@
 const inquirer = require('./cli');
-
+const document = require('./document');
 
 
 class Employee{
@@ -16,7 +16,9 @@ function getName(name) {
     }
     return "";
   }
+  
   function getId(id) {
+    
     if (id) {
       return `<p>${id}</p>`;
     }
