@@ -45,5 +45,5 @@ const CLI = require('./Develop/lib/cli');
 
 const cli = new CLI();
 
-cli.run();
+cli.manage();
 

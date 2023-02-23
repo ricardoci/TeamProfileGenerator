@@ -1,14 +1,21 @@
 const inquirer = require('./cli');
 const Employee = require('./Employee');
 
+
+
 class Manager extends Employee{
-    constructor(){
+    constructor(officeNumber){
         super()
-        this.officNumber = officNumber;
+        this.officeNumber = officeNumber;
 
     }
 }
 function getRole() {
+    
+        if (officeNumber) {
+            return `<p>${officeNumber}</p>`;
+          }
+          
     
     return Manager;
   }
