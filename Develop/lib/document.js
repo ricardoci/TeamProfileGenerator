@@ -12,7 +12,7 @@ function createDocument( Position, tasks, engine, manager ) {
     return `
       <div class="card">
       <h3>Team Manager</h3>
-        <h3>${manager.name}</h3>
+        <p>${manager.name}</p>
         <p>ID: ${manager.id}</p>
         <p>Email: ${manager.email}</p>
         <p>Email: ${manager.officeNumber}</p>
@@ -26,7 +26,9 @@ function createDocument( Position, tasks, engine, manager ) {
     .map((task) => {
       return `
         <div class="card">
-          <h3>${task.name}</h3>
+        <h3>${Position}</h3>
+        <p>${task.name}</p>
+          <p>${task.name}</p>
           <p>ID: ${task.id}</p>
           <p>Email: ${task.email}</p>
         </div>
@@ -39,6 +41,7 @@ function createDocument( Position, tasks, engine, manager ) {
     .map((engine) => {
       return `
         <div class="card">
+        ${Position}
           <h3>${engine.name}</h3>
           <p>ID: ${engine.id}</p>
           <p>Email: ${engine.email}</p>
@@ -60,7 +63,7 @@ function createDocument( Position, tasks, engine, manager ) {
     <body>
       <div class="card">
      
-      <p>${Position}</p>
+      
       ${Manager}
       ${employeeList}</p>
       ${engineers}</p>

@@ -11,6 +11,8 @@ class CLI {
     this.tasks = [];
     this.engine = [];
     this.manager = [];
+    this.Position = '';
+  
   }
     
   manage() {
@@ -97,7 +99,12 @@ class CLI {
           message: 'Would you like to add another member?',
         },
       ])
+      
+       
+
+
       .then(({ name, id, email,github, confirmAddTask }) => {
+        
         const engineer = new Engineer(name, id, email, github, confirmAddTask);
         this.engine.push({ name, id, email, github }); // push an object containing name, id, and email
         if (confirmAddTask) {
@@ -130,8 +137,17 @@ class CLI {
             choices: ["engineer", "intern" ],
           }
         ])
-        .then(answers => {
-          if (answers.Position.includes("engineer")) {
+        .then(({ Position }) => {
+          const selectedPosition = Position.join(', ');
+          this.Position = `${selectedPosition}`;
+          
+        })
+       
+     
+
+        .then(() => {
+         
+          if (this.Position.includes("engineer")) {
             return this.Engineer();
           } else if (answers.Position.includes("intern")) {
             return this.intern();
@@ -139,6 +155,8 @@ class CLI {
             return null;
           }
         });
+
+        
     }
     
 
@@ -168,7 +186,11 @@ class CLI {
         },
       ])
       .then(({ name, id, email, confirmAddTask }) => {
-        const employee = new Employee(name, id, email, confirmAddTask);
+       
+         
+
+        
+        const employee = new Employee( name, id, email, confirmAddTask);
         this.tasks.push({ name, id, email }); // push an object containing name, id, and email
         if (confirmAddTask) {
           return this.run();
