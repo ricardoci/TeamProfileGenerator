@@ -13,7 +13,7 @@ class CLI {
     this.engine = [];
     this.manager = [];
     this.inter = [];
-    this.Position = '';
+    this.Position = [];
   
   }
     
@@ -186,16 +186,18 @@ class CLI {
       
             const Inter = new Intern( name, id, email, school, confirmAddTask);
             this.inter.push({ name, id, email, school }); // push an object containing name, id, and email
+            
             if (confirmAddTask) {
-              return this.choice(this.Position);
+              return this.choice();
+            } else {
+              return Promise.all([
+                writeFile(
+                  join(__dirname, '..', 'teamProfiles.html'),
+                  createDocument(this.Position, this.tasks, this.engine, this.manager, this.inter)
+                )
+              ]).then(() => console.log('Created teamProfiles.html'));
             }
-            else  return writeFile(
-              join(__dirname, '..', 'teamProfiles.html'),
-              createDocument(this.Position, this.tasks, this.engine, this.manager, this.inter)
-            )
-         
           })
-          
           .then(() => console.log('Created teamProfiles.html'))
           .catch((err) => {
             console.log(err);
