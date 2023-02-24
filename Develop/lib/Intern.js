@@ -2,7 +2,7 @@ const inquirer = require('./cli');
 const Employee = require('./Employee');
 
 class Intern extends Employee{
-    constructor(){
+    constructor(school){
         super()
         this.school = school;
 

@@ -2,15 +2,17 @@ const inquirer = require('inquirer');
 const { join } = require('path');
 const { writeFile } = require('fs/promises');
 const { createDocument } = require('./document');
-const Employee = require('../lib/Employee');
+
 const Engineer = require('../lib/Engineer');
 const Manager = require('../lib/Manager');
+const Intern = require('../lib/Intern');
 
 class CLI {
   constructor() {
     this.tasks = [];
     this.engine = [];
     this.manager = [];
+    this.inter = [];
     this.Position = '';
   
   }
@@ -21,22 +23,22 @@ class CLI {
         {
           type: 'input',
           name: 'name',
-          message: 'What is your name?',
+          message: 'What is your Managers name?',
         },
         {
           type: 'input',
           name: 'id',
-          message: 'What is your id?',
+          message: 'What is your Managers id?',
         },
         {
           type: 'input',
           name: 'email',
-          message: 'What is your email?',
+          message: 'What is your Managers email?',
         },
         {
           type: 'input',
           name: 'officeNumber',
-          message: 'What is your office Number?',
+          message: 'What is your office Managers Number?',
         },
         {
           type: 'confirm',
@@ -54,7 +56,7 @@ class CLI {
         else{ return writeFile(
           
           join(__dirname, '..', 'teamProfiles.html'),
-          createDocument(this.Position, this.tasks, this.engine, this.manager)
+          createDocument(this.Position, this.tasks, this.engine, this.manager, this.inter)
         
         )
         }
@@ -76,22 +78,22 @@ class CLI {
         {
           type: 'input',
           name: 'name',
-          message: 'What is your name?',
+          message: 'What is your Engineers name?',
         },
         {
           type: 'input',
           name: 'id',
-          message: 'What is your id?',
+          message: 'What is your Engineers id?',
         },
         {
           type: 'input',
           name: 'email',
-          message: 'What is your email?',
+          message: 'What is your Engineers email?',
         },
         {
           type: 'input',
           name: 'github',
-          message: 'What is your github?',
+          message: 'What is your Engineers github?',
         },
         {
           type: 'confirm',
@@ -99,9 +101,6 @@ class CLI {
           message: 'Would you like to add another member?',
         },
       ])
-      
-       
-
 
       .then(({ name, id, email,github, confirmAddTask }) => {
         
@@ -111,9 +110,8 @@ class CLI {
           return this.choice();
         }
         else{ return writeFile(
-          
           join(__dirname, '..', 'teamProfiles.html'),
-          createDocument(this.Position, this.tasks, this.engine, this.manager)
+          createDocument(this.Position, this.tasks, this.engine, this.manager, this.inter)
         
         )
         }
@@ -126,6 +124,8 @@ class CLI {
       });
 
     }
+
+
 
     choice() {
       return inquirer
@@ -138,75 +138,69 @@ class CLI {
           }
         ])
         .then(({ Position }) => {
-          const selectedPosition = Position.join(', ');
-          this.Position = `${selectedPosition}`;
-          
-        })
-       
-     
+          const selectedPosition = Position.join(", ");
+        this.Position = `${selectedPosition}`
 
-        .then(() => {
-         
-          if (this.Position.includes("engineer")) {
+
+          if (Position.includes("engineer")) {
             return this.Engineer();
-          } else if (answers.Position.includes("intern")) {
-            return this.intern();
+          } else if (Position.includes("intern")) {
+            return this.Intern();
           } else {
             return null;
           }
         });
-
-        
     }
     
 
-
-  Employee() {
-    return inquirer
-      .prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'What is your name?',
-        },
-        {
-          type: 'input',
-          name: 'id',
-          message: 'What is your id?',
-        },
-        {
-          type: 'input',
-          name: 'email',
-          message: 'What is your email?',
-        },
-        {
-          type: 'confirm',
-          name: 'confirmAddTask',
-          message: 'Would you like to add another member?',
-        },
-      ])
-      .then(({ name, id, email, confirmAddTask }) => {
-       
-         
-
-        
-        const employee = new Employee( name, id, email, confirmAddTask);
-        this.tasks.push({ name, id, email }); // push an object containing name, id, and email
-        if (confirmAddTask) {
-          return this.run();
-        }
-        else  return writeFile(
-          join(__dirname, '..', 'teamProfiles.html'),
-          createDocument(this.Position, this.tasks, this.engine, this.manager)
-        )
-     
-      })
+      Intern() {
+        return inquirer
+          .prompt([
+            {
+              type: 'input',
+              name: 'name',
+              message: 'What is your Interns name?',
+            },
+            {
+              type: 'input',
+              name: 'id',
+              message: 'What is your Inters id?',
+            },
+            {
+              type: 'input',
+              name: 'email',
+              message: 'What is your Interns email?',
+            },
+            {
+              type: 'input',
+              name: 'school',
+              message: 'What is your Interns School Name?',
+            },
+            {
+              type: 'confirm',
+              name: 'confirmAddTask',
+              message: 'Would you like to add another member?',
+            },
+          ])
+          .then(({ name, id, email, school, confirmAddTask }) => {
       
-      .then(() => console.log('Created teamProfiles.html'))
-      .catch((err) => {
-        console.log(err);
-        console.log('Oops. Something went wrong.');
-      });
+            const Inter = new Intern( name, id, email, school, confirmAddTask);
+            this.inter.push({ name, id, email, school }); // push an object containing name, id, and email
+            if (confirmAddTask) {
+              return this.choice(this.Position);
+            }
+            else  return writeFile(
+              join(__dirname, '..', 'teamProfiles.html'),
+              createDocument(this.Position, this.tasks, this.engine, this.manager, this.inter)
+            )
+         
+          })
+          
+          .then(() => console.log('Created teamProfiles.html'))
+          .catch((err) => {
+            console.log(err);
+            console.log('Oops. Something went wrong.');
+          });
   }
 }  
 

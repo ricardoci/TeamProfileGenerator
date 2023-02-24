@@ -1,11 +1,27 @@
 const Employee = require("./Employee");
 const engine = require("./Engineer");
+const Intern = require("./Intern");
 const Manager = require('../lib/Manager');
 const inquirer = require('./cli');
 
 
-function createDocument( Position, tasks, engine, manager ) {
+function createDocument( Position, tasks, engine, manager, inter ) {
 
+
+
+  const Intern = inter
+  .map((inter) => {
+    return `
+      <div class="card">
+      <h3>${Position}</h3>
+        <p>${inter.name}</p>
+        <p>ID: ${inter.id}</p>
+        <p>Email: ${inter.email}</p>
+        <p>School Name: ${inter.school}</p>
+      </div>
+    `;
+  })
+  .join('');
 
   const Manager = manager
   .map((manager) => {
@@ -15,7 +31,7 @@ function createDocument( Position, tasks, engine, manager ) {
         <p>${manager.name}</p>
         <p>ID: ${manager.id}</p>
         <p>Email: ${manager.email}</p>
-        <p>Email: ${manager.officeNumber}</p>
+        <p>Office Number: ${manager.officeNumber}</p>
       </div>
     `;
   })
@@ -41,8 +57,8 @@ function createDocument( Position, tasks, engine, manager ) {
     .map((engine) => {
       return `
         <div class="card">
-        ${Position}
-          <h3>${engine.name}</h3>
+        <h3>${Position}</h3>
+          <p>${engine.name}</p>
           <p>ID: ${engine.id}</p>
           <p>Email: ${engine.email}</p>
           <p>github: ${engine.github}</p>
@@ -65,9 +81,9 @@ function createDocument( Position, tasks, engine, manager ) {
      
       
       ${Manager}
-      ${employeeList}</p>
-      ${engineers}</p>
-      
+      ${employeeList}
+      ${engineers}
+      ${Intern}
       
 
     
